@@ -1,0 +1,52 @@
+<?php
+/** @var \IDangerous\ExtendSubscribeOptions\Block\Newsletter\Additional $block */
+?>
+<?php if ($block->isAnyOptionEnabled()): ?>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Additional Communication Preferences')) ?></span></legend>
+        <?php if ($block->isCallEnabled()): ?>
+            <div class="field choice">
+                <input type="checkbox"
+                       name="subscription[allow_call]"
+                       id="allow_call"
+                       value="1"
+                       title="<?= $block->escapeHtmlAttr(__('Allow for Call')) ?>"
+                       class="checkbox"
+                       <?= $block->getCustomerPreference('allow_call') ? 'checked="checked"' : '' ?>>
+                <label for="allow_call" class="label">
+                    <span><?= $block->escapeHtml(__('Allow for Call')) ?></span>
+                </label>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($block->isSmsEnabled()): ?>
+            <div class="field choice">
+                <input type="checkbox"
+                       name="subscription[allow_sms]"
+                       id="allow_sms"
+                       value="1"
+                       title="<?= $block->escapeHtmlAttr(__('Allow for SMS Messages')) ?>"
+                       class="checkbox"
+                       <?= $block->getCustomerPreference('allow_sms') ? 'checked="checked"' : '' ?>>
+                <label for="allow_sms" class="label">
+                    <span><?= $block->escapeHtml(__('Allow for SMS Messages')) ?></span>
+                </label>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($block->isWhatsappEnabled()): ?>
+            <div class="field choice">
+                <input type="checkbox"
+                       name="subscription[allow_whatsapp]"
+                       id="allow_whatsapp"
+                       value="1"
+                       title="<?= $block->escapeHtmlAttr(__('Allow for WhatsApp Communication')) ?>"
+                       class="checkbox"
+                       <?= $block->getCustomerPreference('allow_whatsapp') ? 'checked="checked"' : '' ?>>
+                <label for="allow_whatsapp" class="label">
+                    <span><?= $block->escapeHtml(__('Allow for WhatsApp Communication')) ?></span>
+                </label>
+            </div>
+        <?php endif; ?>
+    </fieldset>
+<?php endif; ?>
