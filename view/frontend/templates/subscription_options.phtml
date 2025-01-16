@@ -2,8 +2,9 @@
 /** @var \IDangerous\ExtendSubscribeOptions\Block\SubscriptionOptions $block */
 ?>
 <?php if ($block->isAnyOptionEnabled()): ?>
-    <fieldset class="fieldset">
-        <legend class="legend"><span><?= $block->escapeHtml(__('Communication Preferences')) ?></span></legend>
+    <div class="extend_communication-preferences">
+        <h4 class="extend_title"><span><?= $block->escapeHtml(__('Communication Preferences')) ?></span></h4>
+        <hr>
         <?php if ($block->isCallEnabled()): ?>
             <div class="field choice">
                 <input type="checkbox"
@@ -60,7 +61,7 @@
                 </label>
             </div>
         <?php endif; ?>
-    </fieldset>
+    </div>
 
     <!-- Modal Containers -->
     <?php if ($block->isCallEnabled() && $block->getOptionDescription('call')): ?>
