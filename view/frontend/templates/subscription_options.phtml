@@ -10,10 +10,15 @@
                        name="subscription[allow_call]"
                        id="allow_call"
                        value="1"
-                       title="<?= $block->escapeHtmlAttr(__('Allow for Call')) ?>"
+                       title="<?= $block->escapeHtmlAttr($block->getOptionLabel('call')) ?>"
                        class="checkbox">
                 <label for="allow_call" class="label">
-                    <span><?= $block->escapeHtml(__('Allow for Call')) ?></span>
+                    <span><?= $block->escapeHtml($block->getOptionLabel('call')) ?></span>
+                    <?php if ($block->getOptionDescription('call')): ?>
+                        <a href="#" class="read-more" data-mage-init='{"subscriptionModal": {"target": "#call-description-modal"}}'>
+                            <?= $block->escapeHtml(__('Read More')) ?>
+                        </a>
+                    <?php endif; ?>
                 </label>
             </div>
         <?php endif; ?>
@@ -24,10 +29,15 @@
                        name="subscription[allow_sms]"
                        id="allow_sms"
                        value="1"
-                       title="<?= $block->escapeHtmlAttr(__('Allow for SMS Messages')) ?>"
+                       title="<?= $block->escapeHtmlAttr($block->getOptionLabel('sms')) ?>"
                        class="checkbox">
                 <label for="allow_sms" class="label">
-                    <span><?= $block->escapeHtml(__('Allow for SMS Messages')) ?></span>
+                    <span><?= $block->escapeHtml($block->getOptionLabel('sms')) ?></span>
+                    <?php if ($block->getOptionDescription('sms')): ?>
+                        <a href="#" class="read-more" data-mage-init='{"subscriptionModal": {"target": "#sms-description-modal"}}'>
+                            <?= $block->escapeHtml(__('Read More')) ?>
+                        </a>
+                    <?php endif; ?>
                 </label>
             </div>
         <?php endif; ?>
@@ -38,12 +48,42 @@
                        name="subscription[allow_whatsapp]"
                        id="allow_whatsapp"
                        value="1"
-                       title="<?= $block->escapeHtmlAttr(__('Allow for WhatsApp Communication')) ?>"
+                       title="<?= $block->escapeHtmlAttr($block->getOptionLabel('whatsapp')) ?>"
                        class="checkbox">
                 <label for="allow_whatsapp" class="label">
-                    <span><?= $block->escapeHtml(__('Allow for WhatsApp Communication')) ?></span>
+                    <span><?= $block->escapeHtml($block->getOptionLabel('whatsapp')) ?></span>
+                    <?php if ($block->getOptionDescription('whatsapp')): ?>
+                        <a href="#" class="read-more" data-mage-init='{"subscriptionModal": {"target": "#whatsapp-description-modal"}}'>
+                            <?= $block->escapeHtml(__('Read More')) ?>
+                        </a>
+                    <?php endif; ?>
                 </label>
             </div>
         <?php endif; ?>
     </fieldset>
+
+    <!-- Modal Containers -->
+    <?php if ($block->isCallEnabled() && $block->getOptionDescription('call')): ?>
+        <div id="call-description-modal" style="display: none;">
+            <div class="modal-content">
+                <?= /* @noEscape */ $block->getOptionDescription('call') ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($block->isSmsEnabled() && $block->getOptionDescription('sms')): ?>
+        <div id="sms-description-modal" style="display: none;">
+            <div class="modal-content">
+                <?= /* @noEscape */ $block->getOptionDescription('sms') ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($block->isWhatsappEnabled() && $block->getOptionDescription('whatsapp')): ?>
+        <div id="whatsapp-description-modal" style="display: none;">
+            <div class="modal-content">
+                <?= /* @noEscape */ $block->getOptionDescription('whatsapp') ?>
+            </div>
+        </div>
+    <?php endif; ?>
 <?php endif; ?>

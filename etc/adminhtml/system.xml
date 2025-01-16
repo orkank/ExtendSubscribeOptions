@@ -11,17 +11,59 @@
             <resource>IDangerous_ExtendSubscribeOptions::config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Configuration</label>
+
+                <!-- Call Option -->
                 <field id="enable_call" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Call Option</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="call_label" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Call Option Label</label>
+                    <depends>
+                        <field id="enable_call">1</field>
+                    </depends>
+                </field>
+                <field id="call_description" translate="label" type="textarea" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Call Option Description</label>
+                    <depends>
+                        <field id="enable_call">1</field>
+                    </depends>
+                </field>
+
+                <!-- SMS Option -->
                 <field id="enable_sms" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable SMS Option</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="sms_label" translate="label" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Option Label</label>
+                    <depends>
+                        <field id="enable_sms">1</field>
+                    </depends>
+                </field>
+                <field id="sms_description" translate="label" type="textarea" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Option Description</label>
+                    <depends>
+                        <field id="enable_sms">1</field>
+                    </depends>
+                </field>
+
+                <!-- WhatsApp Option -->
                 <field id="enable_whatsapp" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable WhatsApp Option</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="whatsapp_label" translate="label" type="text" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>WhatsApp Option Label</label>
+                    <depends>
+                        <field id="enable_whatsapp">1</field>
+                    </depends>
+                </field>
+                <field id="whatsapp_description" translate="label" type="textarea" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>WhatsApp Option Description</label>
+                    <depends>
+                        <field id="enable_whatsapp">1</field>
+                    </depends>
                 </field>
             </group>
         </section>
