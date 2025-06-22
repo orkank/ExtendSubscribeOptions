@@ -32,6 +32,7 @@ type CustomerSubscriptionOptionsOutput {
 
 type Query {
     subscriptionOptionsConfig: SubscriptionOptionsConfig @resolver(class: "IDangerous\\ExtendSubscribeOptions\\Model\\Resolver\\SubscriptionOptionsConfig") @doc(description: "Get subscription options configuration")
+    customerSubscriptionStatus: CustomerSubscriptionStatus @resolver(class: "IDangerous\\ExtendSubscribeOptions\\Model\\Resolver\\CustomerSubscriptionStatus") @doc(description: "Get current customer's subscription preferences (requires authentication)")
 }
 
 type SubscriptionOptionsConfig {
@@ -44,4 +45,12 @@ type SubscriptionOption {
     enabled: Boolean @doc(description: "Whether this subscription option is enabled")
     label: String @doc(description: "Display label for this subscription option")
     description: String @doc(description: "Description text for this subscription option")
+}
+
+type CustomerSubscriptionStatus {
+    customer_id: Int @doc(description: "Customer ID")
+    email: String @doc(description: "Customer email")
+    allow_call: Boolean @doc(description: "Customer allows call notifications")
+    allow_sms: Boolean @doc(description: "Customer allows SMS notifications")
+    allow_whatsapp: Boolean @doc(description: "Customer allows WhatsApp notifications")
 }

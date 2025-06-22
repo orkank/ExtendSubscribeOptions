@@ -177,3 +177,69 @@ query SubscriptionOptionsConfig {
 - **Store-aware**: Configuration is retrieved based on the current store scope
 
 This query does not require authentication and can be used to dynamically show/hide subscription options in your frontend based on admin configuration.
+
+## Get Current Customer's Subscription Status
+
+You can query the current logged customer's subscription preferences. This query requires authentication:
+
+```graphql
+query CustomerSubscriptionStatus {
+    customerSubscriptionStatus {
+        customer_id
+        email
+        allow_call
+        allow_sms
+        allow_whatsapp
+    }
+}
+```
+
+### Response Format (Authenticated)
+
+```json
+{
+    "data": {
+        "customerSubscriptionStatus": {
+            "customer_id": 183056,
+            "email": "customer@example.com",
+            "allow_call": true,
+            "allow_sms": false,
+            "allow_whatsapp": true
+        }
+    }
+}
+```
+
+### Response Format (Not Authenticated)
+
+```json
+{
+    "errors": [
+        {
+            "message": "The current customer isn't authorized.",
+            "extensions": {
+                "category": "graphql-authorization"
+            }
+        }
+    ],
+    "data": {
+        "customerSubscriptionStatus": null
+    }
+}
+```
+
+### Authentication Required
+
+This query requires a valid customer authorization token in the request headers:
+
+```
+Authorization: Bearer <customer_token>
+```
+
+### Features
+
+- **Authentication Check**: Returns authorization error if customer is not logged in
+- **Current Values**: Returns the actual subscription preferences stored for the customer
+- **Customer Info**: Includes customer ID and email for verification
+- **Boolean Values**: All subscription flags are returned as true/false
+- **Error Handling**: Graceful error handling with proper GraphQL error responses
