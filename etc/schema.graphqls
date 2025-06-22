@@ -1,0 +1,47 @@
+type Customer {
+    allow_call: Boolean @resolver(class: "IDangerous\\ExtendSubscribeOptions\\Model\\Resolver\\Customer\\SubscriptionAttributes") @doc(description: "Customer allows call notifications")
+    allow_sms: Boolean @resolver(class: "IDangerous\\ExtendSubscribeOptions\\Model\\Resolver\\Customer\\SubscriptionAttributes") @doc(description: "Customer allows SMS notifications")
+    allow_whatsapp: Boolean @resolver(class: "IDangerous\\ExtendSubscribeOptions\\Model\\Resolver\\Customer\\SubscriptionAttributes") @doc(description: "Customer allows WhatsApp notifications")
+}
+
+input CustomerInput {
+    allow_call: Boolean @doc(description: "Customer allows call notifications")
+    allow_sms: Boolean @doc(description: "Customer allows SMS notifications")
+    allow_whatsapp: Boolean @doc(description: "Customer allows WhatsApp notifications")
+}
+
+input CustomerUpdateInput {
+    allow_call: Boolean @doc(description: "Customer allows call notifications")
+    allow_sms: Boolean @doc(description: "Customer allows SMS notifications")
+    allow_whatsapp: Boolean @doc(description: "Customer allows WhatsApp notifications")
+}
+
+type Mutation {
+    updateCustomerSubscriptionOptions(input: CustomerSubscriptionOptionsInput!): CustomerSubscriptionOptionsOutput @resolver(class: "IDangerous\\ExtendSubscribeOptions\\Model\\Resolver\\UpdateCustomerSubscriptionOptions") @doc(description: "Update customer subscription options")
+}
+
+input CustomerSubscriptionOptionsInput {
+    allow_call: Boolean @doc(description: "Customer allows call notifications")
+    allow_sms: Boolean @doc(description: "Customer allows SMS notifications")
+    allow_whatsapp: Boolean @doc(description: "Customer allows WhatsApp notifications")
+}
+
+type CustomerSubscriptionOptionsOutput {
+    customer: Customer!
+}
+
+type Query {
+    subscriptionOptionsConfig: SubscriptionOptionsConfig @resolver(class: "IDangerous\\ExtendSubscribeOptions\\Model\\Resolver\\SubscriptionOptionsConfig") @doc(description: "Get subscription options configuration")
+}
+
+type SubscriptionOptionsConfig {
+    call: SubscriptionOption @doc(description: "Call subscription option configuration")
+    sms: SubscriptionOption @doc(description: "SMS subscription option configuration")
+    whatsapp: SubscriptionOption @doc(description: "WhatsApp subscription option configuration")
+}
+
+type SubscriptionOption {
+    enabled: Boolean @doc(description: "Whether this subscription option is enabled")
+    label: String @doc(description: "Display label for this subscription option")
+    description: String @doc(description: "Description text for this subscription option")
+}
