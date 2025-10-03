@@ -39,6 +39,11 @@ class SubscriptionOptions extends Template
         return $value ?: __('Allow for ' . ucfirst($type));
     }
 
+    public function getOptionSubtitle($type)
+    {
+        return $this->scopeConfig->getValue("subscription_options/general/{$type}_subtitle");
+    }
+
     public function getOptionDescription($type)
     {
         return $this->scopeConfig->getValue("subscription_options/general/{$type}_description");

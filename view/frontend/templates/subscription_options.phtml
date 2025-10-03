@@ -6,7 +6,7 @@
         <h4 class="extend_title"><span><?= $block->escapeHtml(__('Communication Preferences')) ?></span></h4>
         <hr>
         <?php if ($block->isCallEnabled()): ?>
-            <div class="field choice">
+            <div class="field choice subscription-option">
                 <input type="checkbox"
                        name="subscription[allow_call]"
                        id="allow_call"
@@ -14,10 +14,15 @@
                        title="<?= $block->escapeHtmlAttr($block->getOptionLabel('call')) ?>"
                        class="checkbox">
                 <label for="allow_call" class="label">
-                    <span><?= $block->escapeHtml($block->getOptionLabel('call')) ?></span>
+                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('call')) ?></span>
+                    <?php if ($block->getOptionSubtitle('call')): ?>
+                        <div class="option-subtitle">
+                            <?= /* @noEscape */ $block->getOptionSubtitle('call') ?>
+                        </div>
+                    <?php endif; ?>
                     <?php if ($block->getOptionDescription('call')): ?>
                         <a href="#" class="read-more" data-mage-init='{"subscriptionModal": {"target": "#call-description-modal"}}'>
-                            <?= $block->escapeHtml(__('Read More')) ?>
+                            <?= $block->escapeHtml(__('Detaylı Bilgi')) ?>
                         </a>
                     <?php endif; ?>
                 </label>
@@ -25,7 +30,7 @@
         <?php endif; ?>
 
         <?php if ($block->isSmsEnabled()): ?>
-            <div class="field choice">
+            <div class="field choice subscription-option">
                 <input type="checkbox"
                        name="subscription[allow_sms]"
                        id="allow_sms"
@@ -33,10 +38,15 @@
                        title="<?= $block->escapeHtmlAttr($block->getOptionLabel('sms')) ?>"
                        class="checkbox">
                 <label for="allow_sms" class="label">
-                    <span><?= $block->escapeHtml($block->getOptionLabel('sms')) ?></span>
+                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('sms')) ?></span>
+                    <?php if ($block->getOptionSubtitle('sms')): ?>
+                        <div class="option-subtitle">
+                            <?= /* @noEscape */ $block->getOptionSubtitle('sms') ?>
+                        </div>
+                    <?php endif; ?>
                     <?php if ($block->getOptionDescription('sms')): ?>
                         <a href="#" class="read-more" data-mage-init='{"subscriptionModal": {"target": "#sms-description-modal"}}'>
-                            <?= $block->escapeHtml(__('Read More')) ?>
+                            <?= $block->escapeHtml(__('Detaylı Bilgi')) ?>
                         </a>
                     <?php endif; ?>
                 </label>
@@ -44,7 +54,7 @@
         <?php endif; ?>
 
         <?php if ($block->isWhatsappEnabled()): ?>
-            <div class="field choice">
+            <div class="field choice subscription-option">
                 <input type="checkbox"
                        name="subscription[allow_whatsapp]"
                        id="allow_whatsapp"
@@ -52,10 +62,15 @@
                        title="<?= $block->escapeHtmlAttr($block->getOptionLabel('whatsapp')) ?>"
                        class="checkbox">
                 <label for="allow_whatsapp" class="label">
-                    <span><?= $block->escapeHtml($block->getOptionLabel('whatsapp')) ?></span>
+                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('whatsapp')) ?></span>
+                    <?php if ($block->getOptionSubtitle('whatsapp')): ?>
+                        <div class="option-subtitle">
+                            <?= /* @noEscape */ $block->getOptionSubtitle('whatsapp') ?>
+                        </div>
+                    <?php endif; ?>
                     <?php if ($block->getOptionDescription('whatsapp')): ?>
                         <a href="#" class="read-more" data-mage-init='{"subscriptionModal": {"target": "#whatsapp-description-modal"}}'>
-                            <?= $block->escapeHtml(__('Read More')) ?>
+                            <?= $block->escapeHtml(__('Detaylı Bilgi')) ?>
                         </a>
                     <?php endif; ?>
                 </label>

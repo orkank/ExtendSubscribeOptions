@@ -23,7 +23,13 @@
                         <field id="enable_call">1</field>
                     </depends>
                 </field>
-                <field id="call_description" translate="label" type="textarea" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="call_subtitle" translate="label" type="textarea" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Call Option Subtitle</label>
+                    <depends>
+                        <field id="enable_call">1</field>
+                    </depends>
+                </field>
+                <field id="call_description" translate="label" type="textarea" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Call Option Description</label>
                     <depends>
                         <field id="enable_call">1</field>
@@ -41,7 +47,13 @@
                         <field id="enable_sms">1</field>
                     </depends>
                 </field>
-                <field id="sms_description" translate="label" type="textarea" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="sms_subtitle" translate="label" type="textarea" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Option Subtitle</label>
+                    <depends>
+                        <field id="enable_sms">1</field>
+                    </depends>
+                </field>
+                <field id="sms_description" translate="label" type="textarea" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>SMS Option Description</label>
                     <depends>
                         <field id="enable_sms">1</field>
@@ -59,7 +71,13 @@
                         <field id="enable_whatsapp">1</field>
                     </depends>
                 </field>
-                <field id="whatsapp_description" translate="label" type="textarea" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="whatsapp_subtitle" translate="label" type="textarea" sortOrder="32" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>WhatsApp Option Subtitle</label>
+                    <depends>
+                        <field id="enable_whatsapp">1</field>
+                    </depends>
+                </field>
+                <field id="whatsapp_description" translate="label" type="textarea" sortOrder="33" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>WhatsApp Option Description</label>
                     <depends>
                         <field id="enable_whatsapp">1</field>

@@ -7,6 +7,59 @@
     }
 }
 
+.subscription-option {
+    margin-bottom: 15px;
+
+    .label {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .option-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        .option-subtitle {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            margin-left: 0;
+
+            p {
+                margin: 0 0 5px 0;
+            }
+        }
+
+        .read-more {
+            font-size: 11px;
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 5px;
+
+            &:hover {
+                color: #0056b3;
+            }
+        }
+    }
+
+    // Checkbox ve label'ı yan yana hizala
+    input[type="checkbox"] {
+        float: left;
+        margin-right: 8px;
+        margin-top: 2px;
+    }
+
+    .label {
+        overflow: hidden; // Float'ı temizle
+        display: block;
+    }
+}
+
 .modal-popup {
     .modal-content {
         padding: 20px;
