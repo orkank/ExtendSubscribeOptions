@@ -26,6 +26,11 @@ class Additional extends Template
         parent::__construct($context, $data);
     }
 
+    public function isEmailEnabled()
+    {
+        return $this->scopeConfig->getValue('subscription_options/general/enable_email');
+    }
+
     public function isCallEnabled()
     {
         return $this->scopeConfig->getValue('subscription_options/general/enable_call');
@@ -59,7 +64,7 @@ class Additional extends Template
 
     public function isAnyOptionEnabled()
     {
-        return $this->isCallEnabled() || $this->isSmsEnabled() || $this->isWhatsappEnabled();
+        return $this->isEmailEnabled() || $this->isCallEnabled() || $this->isSmsEnabled() || $this->isWhatsappEnabled();
     }
 
     public function getCustomerPreference($attribute)
@@ -69,6 +74,11 @@ class Additional extends Template
             if ($customerId) {
                 $customer = $this->customerFactory->create();
                 $customer->load($customerId);
+
+                // Handle is_subscribed specially
+                if ($attribute === 'is_subscribed') {
+                    return (bool)$customer->getIsSubscribed();
+                }
 
                 return (bool)$customer->getData($attribute);
             }

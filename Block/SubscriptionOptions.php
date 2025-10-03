@@ -18,6 +18,11 @@ class SubscriptionOptions extends Template
         parent::__construct($context, $data);
     }
 
+    public function isEmailEnabled()
+    {
+        return $this->scopeConfig->getValue('subscription_options/general/enable_email');
+    }
+
     public function isCallEnabled()
     {
         return $this->scopeConfig->getValue('subscription_options/general/enable_call');
@@ -51,6 +56,6 @@ class SubscriptionOptions extends Template
 
     public function isAnyOptionEnabled()
     {
-        return $this->isCallEnabled() || $this->isSmsEnabled() || $this->isWhatsappEnabled();
+        return $this->isEmailEnabled() || $this->isCallEnabled() || $this->isSmsEnabled() || $this->isWhatsappEnabled();
     }
 }

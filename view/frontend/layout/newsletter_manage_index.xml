@@ -2,11 +2,14 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceBlock name="customer_newsletter">
+        <!-- Hide standard newsletter checkbox completely -->
+        <referenceBlock name="customer_newsletter" remove="true"/>
+
+        <!-- Add our custom subscription options -->
+        <referenceContainer name="content">
             <block class="IDangerous\ExtendSubscribeOptions\Block\Newsletter\Additional"
-                   name="customer.form.newsletter.extra"
-                   template="IDangerous_ExtendSubscribeOptions::newsletter/additional.phtml"
-                   after="-"/>
-        </referenceBlock>
+                   name="customer.form.newsletter.custom"
+                   template="IDangerous_ExtendSubscribeOptions::newsletter/additional.phtml"/>
+        </referenceContainer>
     </body>
 </page>

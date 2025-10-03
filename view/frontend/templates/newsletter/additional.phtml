@@ -2,8 +2,37 @@
 /** @var \IDangerous\ExtendSubscribeOptions\Block\Newsletter\Additional $block */
 ?>
 <?php if ($block->isAnyOptionEnabled()): ?>
-    <fieldset class="fieldset">
-        <legend class="legend"><span><?= $block->escapeHtml(__('Additional Communication Preferences')) ?></span></legend>
+    <form class="form newsletter-manage" action="<?= $block->escapeUrl($block->getUrl('newsletter/manage/save')) ?>" method="post" id="form-validate">
+        <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+        <fieldset class="fieldset">
+            <legend class="legend"><span><?= $block->escapeHtml(__('Communication Preferences')) ?></span></legend>
+
+        <!-- Email Subscription Option -->
+        <?php if ($block->isEmailEnabled()): ?>
+            <div class="field choice subscription-option">
+                <input type="checkbox"
+                       name="is_subscribed"
+                       id="is_subscribed"
+                       value="1"
+                       title="<?= $block->escapeHtmlAttr($block->getOptionLabel('email')) ?>"
+                       class="checkbox"
+                       <?= $block->getCustomerPreference('is_subscribed') ? 'checked="checked"' : '' ?>>
+                <label for="is_subscribed" class="label">
+                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('email')) ?></span>
+                    <?php if ($block->getOptionSubtitle('email')): ?>
+                        <div class="option-subtitle">
+                            <?= /* @noEscape */ $block->getOptionSubtitle('email') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($block->getOptionDescription('email')): ?>
+                        <a href="#" class="read-more" data-mage-init='{"subscriptionModal": {"target": "#email-description-modal"}}'>
+                            <?= $block->escapeHtml(__('Detaylı Bilgi')) ?>
+                        </a>
+                    <?php endif; ?>
+                </label>
+            </div>
+        <?php endif; ?>
+
         <?php if ($block->isCallEnabled()): ?>
             <div class="field choice subscription-option">
                 <input type="checkbox"
@@ -78,9 +107,26 @@
                 </label>
             </div>
         <?php endif; ?>
-    </fieldset>
+        </fieldset>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save')) ?>">
+                    <span><?= $block->escapeHtml(__('Save')) ?></span>
+                </button>
+            </div>
+        </div>
+    </form>
 
     <!-- Modal Containers -->
+    <?php if ($block->isEmailEnabled() && $block->getOptionDescription('email')): ?>
+        <div id="email-description-modal" style="display: none;">
+            <div class="modal-content">
+                <?= /* @noEscape */ $block->getOptionDescription('email') ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <?php if ($block->isCallEnabled() && $block->getOptionDescription('call')): ?>
         <div id="call-description-modal" style="display: none;">
             <div class="modal-content">

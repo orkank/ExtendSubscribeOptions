@@ -5,6 +5,32 @@
     <div class="extend_communication-preferences">
         <h4 class="extend_title"><span><?= $block->escapeHtml(__('Communication Preferences')) ?></span></h4>
         <hr>
+
+        <!-- Email Subscription Option -->
+        <?php if ($block->isEmailEnabled()): ?>
+            <div class="field choice subscription-option">
+                <input type="checkbox"
+                       name="is_subscribed"
+                       id="is_subscribed"
+                       value="1"
+                       title="<?= $block->escapeHtmlAttr($block->getOptionLabel('email')) ?>"
+                       class="checkbox">
+                <label for="is_subscribed" class="label">
+                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('email')) ?></span>
+                    <?php if ($block->getOptionSubtitle('email')): ?>
+                        <div class="option-subtitle">
+                            <?= /* @noEscape */ $block->getOptionSubtitle('email') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($block->getOptionDescription('email')): ?>
+                        <a href="#" class="read-more" data-mage-init='{"subscriptionModal": {"target": "#email-description-modal"}}'>
+                            <?= $block->escapeHtml(__('Detaylı Bilgi')) ?>
+                        </a>
+                    <?php endif; ?>
+                </label>
+            </div>
+        <?php endif; ?>
+
         <?php if ($block->isCallEnabled()): ?>
             <div class="field choice subscription-option">
                 <input type="checkbox"
@@ -79,6 +105,14 @@
     </div>
 
     <!-- Modal Containers -->
+    <?php if ($block->isEmailEnabled() && $block->getOptionDescription('email')): ?>
+        <div id="email-description-modal" style="display: none;">
+            <div class="modal-content">
+                <?= /* @noEscape */ $block->getOptionDescription('email') ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <?php if ($block->isCallEnabled() && $block->getOptionDescription('call')): ?>
         <div id="call-description-modal" style="display: none;">
             <div class="modal-content">

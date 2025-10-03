@@ -2,6 +2,15 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <!-- Hide standard newsletter checkbox completely -->
+        <referenceBlock name="customer.form.register.newsletter" remove="true"/>
+
+        <!-- Hide newsletter checkbox with CSS -->
+        <referenceContainer name="head">
+            <block class="Magento\Framework\View\Element\Template" name="hide_newsletter_css" template="IDangerous_ExtendSubscribeOptions::hide_newsletter.phtml"/>
+        </referenceContainer>
+
+        <!-- Add our custom subscription options -->
         <referenceContainer name="form.additional.info">
             <block class="IDangerous\ExtendSubscribeOptions\Block\SubscriptionOptions"
                    name="subscription_options"
