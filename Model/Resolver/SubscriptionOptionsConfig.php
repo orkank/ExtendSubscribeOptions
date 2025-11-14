@@ -48,6 +48,7 @@ class SubscriptionOptionsConfig implements ResolverInterface
             $storeId = (int) $context->getExtensionAttributes()->getStore()->getId();
 
             $config = [
+                'email' => $this->getOptionConfig('email', $storeId),
                 'call' => $this->getOptionConfig('call', $storeId),
                 'sms' => $this->getOptionConfig('sms', $storeId),
                 'whatsapp' => $this->getOptionConfig('whatsapp', $storeId)
@@ -65,9 +66,10 @@ class SubscriptionOptionsConfig implements ResolverInterface
 
             // Return default config in case of error
             return [
-                'call' => ['enabled' => false, 'label' => '', 'description' => ''],
-                'sms' => ['enabled' => false, 'label' => '', 'description' => ''],
-                'whatsapp' => ['enabled' => false, 'label' => '', 'description' => '']
+                'email' => ['enabled' => false, 'label' => '', 'subtitle' => '', 'description' => ''],
+                'call' => ['enabled' => false, 'label' => '', 'subtitle' => '', 'description' => ''],
+                'sms' => ['enabled' => false, 'label' => '', 'subtitle' => '', 'description' => ''],
+                'whatsapp' => ['enabled' => false, 'label' => '', 'subtitle' => '', 'description' => '']
             ];
         }
     }
@@ -83,6 +85,7 @@ class SubscriptionOptionsConfig implements ResolverInterface
     {
         $enabledPath = self::CONFIG_PATH_PREFIX . 'enable_' . $optionType;
         $labelPath = self::CONFIG_PATH_PREFIX . $optionType . '_label';
+        $subtitlePath = self::CONFIG_PATH_PREFIX . $optionType . '_subtitle';
         $descriptionPath = self::CONFIG_PATH_PREFIX . $optionType . '_description';
 
         $enabled = (bool) $this->scopeConfig->getValue(
@@ -97,6 +100,12 @@ class SubscriptionOptionsConfig implements ResolverInterface
             $storeId
         );
 
+        $subtitle = (string) $this->scopeConfig->getValue(
+            $subtitlePath,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
         $description = (string) $this->scopeConfig->getValue(
             $descriptionPath,
             ScopeInterface::SCOPE_STORE,
@@ -106,6 +115,7 @@ class SubscriptionOptionsConfig implements ResolverInterface
         return [
             'enabled' => $enabled,
             'label' => $label ?: ucfirst($optionType), // Fallback to capitalized option type
+            'subtitle' => $subtitle ?: '',
             'description' => $description ?: ''
         ];
     }

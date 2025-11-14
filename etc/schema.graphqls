@@ -36,6 +36,7 @@ type Query {
 }
 
 type SubscriptionOptionsConfig {
+    email: SubscriptionOption @doc(description: "Email subscription option configuration")
     call: SubscriptionOption @doc(description: "Call subscription option configuration")
     sms: SubscriptionOption @doc(description: "SMS subscription option configuration")
     whatsapp: SubscriptionOption @doc(description: "WhatsApp subscription option configuration")
@@ -44,6 +45,7 @@ type SubscriptionOptionsConfig {
 type SubscriptionOption {
     enabled: Boolean @doc(description: "Whether this subscription option is enabled")
     label: String @doc(description: "Display label for this subscription option")
+    subtitle: String @doc(description: "Subtitle text for this subscription option")
     description: String @doc(description: "Description text for this subscription option")
 }
 
