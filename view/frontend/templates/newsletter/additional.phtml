@@ -12,12 +12,12 @@
             <div class="field choice subscription-option">
                 <input type="checkbox"
                        name="is_subscribed"
-                       id="is_subscribed"
+                       id="is_subscribed_newsletter"
                        value="1"
                        title="<?= $block->escapeHtmlAttr($block->getOptionLabel('email')) ?>"
                        class="checkbox"
                        <?= $block->getCustomerPreference('is_subscribed') ? 'checked="checked"' : '' ?>>
-                <label for="is_subscribed" class="label">
+                <label for="is_subscribed_newsletter" class="label">
                     <span class="option-title"><?= ($block->getOptionLabel('email')) ?></span>
                     <?php if ($block->getOptionSubtitle('email')): ?>
                         <div class="option-subtitle">
