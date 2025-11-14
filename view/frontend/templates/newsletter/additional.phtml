@@ -18,7 +18,7 @@
                        class="checkbox"
                        <?= $block->getCustomerPreference('is_subscribed') ? 'checked="checked"' : '' ?>>
                 <label for="is_subscribed" class="label">
-                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('email')) ?></span>
+                    <span class="option-title"><?= ($block->getOptionLabel('email')) ?></span>
                     <?php if ($block->getOptionSubtitle('email')): ?>
                         <div class="option-subtitle">
                             <?= /* @noEscape */ $block->getOptionSubtitle('email') ?>
@@ -43,7 +43,7 @@
                        class="checkbox"
                        <?= $block->getCustomerPreference('allow_call') ? 'checked="checked"' : '' ?>>
                 <label for="allow_call" class="label">
-                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('call')) ?></span>
+                    <span class="option-title"><?= ($block->getOptionLabel('call')) ?></span>
                     <?php if ($block->getOptionSubtitle('call')): ?>
                         <div class="option-subtitle">
                             <?= /* @noEscape */ $block->getOptionSubtitle('call') ?>
@@ -68,7 +68,7 @@
                        class="checkbox"
                        <?= $block->getCustomerPreference('allow_sms') ? 'checked="checked"' : '' ?>>
                 <label for="allow_sms" class="label">
-                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('sms')) ?></span>
+                    <span class="option-title"><?= ($block->getOptionLabel('sms')) ?></span>
                     <?php if ($block->getOptionSubtitle('sms')): ?>
                         <div class="option-subtitle">
                             <?= /* @noEscape */ $block->getOptionSubtitle('sms') ?>
@@ -93,7 +93,7 @@
                        class="checkbox"
                        <?= $block->getCustomerPreference('allow_whatsapp') ? 'checked="checked"' : '' ?>>
                 <label for="allow_whatsapp" class="label">
-                    <span class="option-title"><?= $block->escapeHtml($block->getOptionLabel('whatsapp')) ?></span>
+                    <span class="option-title"><?= ($block->getOptionLabel('whatsapp')) ?></span>
                     <?php if ($block->getOptionSubtitle('whatsapp')): ?>
                         <div class="option-subtitle">
                             <?= /* @noEscape */ $block->getOptionSubtitle('whatsapp') ?>

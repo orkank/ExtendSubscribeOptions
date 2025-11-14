@@ -16,4 +16,9 @@
                 type="IDangerous\ExtendSubscribeOptions\Plugin\Model\Resolver\UpdateCustomer"
                 sortOrder="10"/>
     </type>
+    <type name="Magento\Customer\Controller\Adminhtml\Index\Save">
+        <plugin name="idangerous_extend_subscribe_options_admin_save"
+                type="IDangerous\ExtendSubscribeOptions\Plugin\Customer\AdminSave"
+                sortOrder="10"/>
+    </type>
 </config>

@@ -5,21 +5,29 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Model\ResourceModel\Customer as CustomerResource;
 use Psr\Log\LoggerInterface;
 
 class CustomerRegisterSuccess implements ObserverInterface
 {
     protected $request;
     protected $customerRepository;
+    protected $customerFactory;
+    protected $customerResource;
     protected $logger;
 
     public function __construct(
         RequestInterface $request,
         CustomerRepositoryInterface $customerRepository,
+        CustomerFactory $customerFactory,
+        CustomerResource $customerResource,
         LoggerInterface $logger
     ) {
         $this->request = $request;
         $this->customerRepository = $customerRepository;
+        $this->customerFactory = $customerFactory;
+        $this->customerResource = $customerResource;
         $this->logger = $logger;
     }
 
@@ -32,54 +40,57 @@ class CustomerRegisterSuccess implements ObserverInterface
                 return;
             }
 
-            // Get subscription data from request
-            $subscriptionData = $this->request->getParam('subscription', []);
+            // Get subscription data from POST request first (most reliable for form submissions)
             $postData = $this->request->getPostValue();
-            $postSubscriptionData = isset($postData['subscription']) ? $postData['subscription'] : [];
-            $finalSubscriptionData = !empty($subscriptionData) ? $subscriptionData : $postSubscriptionData;
+            $subscriptionData = isset($postData['subscription']) ? $postData['subscription'] : [];
+
+            // Fallback to getParam if not in POST
+            if (empty($subscriptionData)) {
+                $subscriptionData = $this->request->getParam('subscription', []);
+            }
 
             $this->logger->info("CustomerRegisterSuccess Observer called", [
                 'customer_id' => $customer->getId(),
                 'email' => $customer->getEmail(),
-                'subscription_data' => $finalSubscriptionData
+                'subscription_data' => $subscriptionData,
+                'post_data_keys' => array_keys($postData ?? [])
             ]);
 
-            if (!empty($finalSubscriptionData)) {
-                // Load the customer to get the latest version
-                $customerData = $this->customerRepository->getById($customer->getId());
+            // Process subscription data - check if checkboxes are checked
+            // For checkboxes, if the key exists in the array, the checkbox is checked (value=1)
+            // If the key doesn't exist, the checkbox is unchecked (value=0)
+            $allowCall = (isset($subscriptionData['allow_call']) && $subscriptionData['allow_call']) ? 1 : 0;
+            $allowSms = (isset($subscriptionData['allow_sms']) && $subscriptionData['allow_sms']) ? 1 : 0;
+            $allowWhatsapp = (isset($subscriptionData['allow_whatsapp']) && $subscriptionData['allow_whatsapp']) ? 1 : 0;
 
-                $allowCall = isset($finalSubscriptionData['allow_call']) ? 1 : 0;
-                $allowSms = isset($finalSubscriptionData['allow_sms']) ? 1 : 0;
-                $allowWhatsapp = isset($finalSubscriptionData['allow_whatsapp']) ? 1 : 0;
+            // Load customer model to update table columns directly
+            // This is needed because attributes are defined as both EAV and table columns
+            $customerModel = $this->customerFactory->create();
+            $this->customerResource->load($customerModel, $customer->getId());
 
-                // Set the custom attributes
-                $customerData->setCustomAttribute('allow_call', $allowCall);
-                $customerData->setCustomAttribute('allow_sms', $allowSms);
-                $customerData->setCustomAttribute('allow_whatsapp', $allowWhatsapp);
+            // Set attributes on model (this updates customer_entity table columns)
+            $customerModel->setData('allow_call', $allowCall);
+            $customerModel->setData('allow_sms', $allowSms);
+            $customerModel->setData('allow_whatsapp', $allowWhatsapp);
 
-                // Save the customer
-                $this->customerRepository->save($customerData);
+            // Save customer model
+            $this->customerResource->save($customerModel);
 
-                $this->logger->info("Subscription preferences saved via observer", [
-                    'customer_id' => $customer->getId(),
-                    'allow_call' => $allowCall,
-                    'allow_sms' => $allowSms,
-                    'allow_whatsapp' => $allowWhatsapp
-                ]);
+            $this->logger->info("Subscription preferences saved via observer to customer_entity table", [
+                'customer_id' => $customer->getId(),
+                'allow_call' => $allowCall,
+                'allow_sms' => $allowSms,
+                'allow_whatsapp' => $allowWhatsapp
+            ]);
 
-                // Verify the save worked
-                $verifyCustomer = $this->customerRepository->getById($customer->getId());
-                $callAttr = $verifyCustomer->getCustomAttribute('allow_call');
-                $smsAttr = $verifyCustomer->getCustomAttribute('allow_sms');
-                $whatsappAttr = $verifyCustomer->getCustomAttribute('allow_whatsapp');
-
-                $this->logger->info("Verification after save", [
-                    'customer_id' => $customer->getId(),
-                    'saved_allow_call' => $callAttr ? $callAttr->getValue() : 'NULL',
-                    'saved_allow_sms' => $smsAttr ? $smsAttr->getValue() : 'NULL',
-                    'saved_allow_whatsapp' => $whatsappAttr ? $whatsappAttr->getValue() : 'NULL'
-                ]);
-            }
+            // Verify the save worked
+            $this->customerResource->load($customerModel, $customer->getId());
+            $this->logger->info("Verification after save", [
+                'customer_id' => $customer->getId(),
+                'saved_allow_call' => $customerModel->getData('allow_call'),
+                'saved_allow_sms' => $customerModel->getData('allow_sms'),
+                'saved_allow_whatsapp' => $customerModel->getData('allow_whatsapp')
+            ]);
         } catch (\Exception $e) {
             $this->logger->error("Error in CustomerRegisterSuccess observer", [
                 'error' => $e->getMessage(),
